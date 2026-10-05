@@ -1,10 +1,9 @@
 package com.simoneg.ecommerce.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -14,9 +13,11 @@ import java.util.UUID;
 @Entity
 @Table(name = "companies")
 public class Companies {
+
     @Id
-    @JdbcTypeCode(SqlTypes.BINARY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
+    @Setter(AccessLevel.NONE)
     private UUID id;
 
     @Column(name = "company_name", nullable = false, unique = true, length = 100)
@@ -36,12 +37,5 @@ public class Companies {
 
     @Column(name = "updated_at", insertable = false, updatable = false)
     private Instant updatedAt;
-
-    @PrePersist
-    void generateId() {
-        if (id == null) {
-            id = UUID.randomUUID();
-        }
-    }
 
 }

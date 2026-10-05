@@ -14,7 +14,7 @@ import java.util.List;
 
 public class UsersSpecifications {
 
-    public static Specification<Users> from(GetUsersRequestDto dto) {
+    public static Specification<Users> getUserFilters(GetUsersRequestDto dto) {
         return (root, query, cb) -> {
             List<Predicate> predicates = new ArrayList<>();
 

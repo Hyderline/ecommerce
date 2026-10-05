@@ -2,10 +2,9 @@ package com.simoneg.ecommerce.model;
 
 import com.simoneg.ecommerce.enumeration.OrderStatus;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -21,8 +20,9 @@ import java.util.UUID;
 public class Orders {
 
     @Id
-    @JdbcTypeCode(SqlTypes.BINARY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
+    @Setter(AccessLevel.NONE)
     private UUID id;
 
     @Enumerated(EnumType.STRING)
@@ -44,13 +44,6 @@ public class Orders {
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> items = new ArrayList<>();
-
-    @PrePersist
-    void generateId() {
-        if (id == null) {
-            id = UUID.randomUUID();
-        }
-    }
 
     public void addItem(OrderItem item) {
         items.add(item);

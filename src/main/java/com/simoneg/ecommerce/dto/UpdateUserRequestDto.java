@@ -7,13 +7,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class CreateUserRequestDto {
+public class UpdateUserRequestDto {
 
     @NotEmpty(message = "Must be present")
     @Size(min = 6, max = 100)
     private String username;
 
-    @NotEmpty(message = "Must be present")
+    @NotBlank(message = "Must be present")
     @Email(regexp = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$", message = "Must have a valid format for an email")
     private String email;
 
@@ -25,8 +25,8 @@ public class CreateUserRequestDto {
     )
     private String password;
 
-    @NotNull
     private RolesEnum roleName;
 
     private String companyName;
+
 }

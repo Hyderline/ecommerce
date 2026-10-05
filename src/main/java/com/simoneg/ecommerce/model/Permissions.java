@@ -1,10 +1,9 @@
 package com.simoneg.ecommerce.model;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
 
 import java.util.UUID;
 
@@ -15,18 +14,12 @@ import java.util.UUID;
 public class Permissions {
 
     @Id
-    @JdbcTypeCode(SqlTypes.BINARY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
+    @Setter(AccessLevel.NONE)
     private UUID id;
 
     @Column(name = "permission_name", nullable = false, unique = true, length = 100)
     private String permissionName;
-
-    @PrePersist
-    void generateId() {
-        if (id == null) {
-            id = UUID.randomUUID();
-        }
-    }
 
 }
